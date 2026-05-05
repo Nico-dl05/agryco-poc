@@ -5,13 +5,12 @@ on:
 
 jobs:
   deploy:
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Start manual workflow
-        run: |
-          echo "Workflow 3 launched manually from GitHub Actions"
-
-      - name: Calculate 3+3
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Calculate 3+3 (deployment step)
         run: |
           echo "Calculating 3+3"
           result=$((3+3))
