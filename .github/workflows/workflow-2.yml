@@ -1,0 +1,26 @@
+name: "Workflow 2"
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  calculate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Calculate 2+2
+        run: |
+          echo "Calculating 2+2"
+          result=$((2+2))
+          echo "Result: $result"
+          if [ "$result" -ne 4 ]; then
+            echo "ERROR: expected 4 but got $result"
+            exit 1
+          fi
+
+      - name: Report status
+        run: |
+          echo "Workflow 2 completed: 2+2 = $((2+2))"

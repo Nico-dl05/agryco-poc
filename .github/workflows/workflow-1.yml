@@ -1,0 +1,27 @@
+name: "Workflow 1"
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  calculate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Calculate 1+1
+        run: |
+          echo "Calculating 1+1"
+          result=$((1+1))
+          echo "Result: $result"
+          if [ "$result" -ne 2 ]; then
+            echo "ERROR: expected 2 but got $result"
+            exit 1
+          fi
+
+      - name: Report status
+        run: |
+          echo "Workflow 1 completed: 1+1 = $((1+1))"
+         
