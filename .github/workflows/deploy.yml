@@ -19,6 +19,7 @@ jobs:
             echo "ERROR: expected 6 but got $result"
             exit 1
           fi
-      - name: Report deploy status
+
+      - name: Report status
         run: |
-          echo "Deploy job completed: 3+3 = $((3+3))"
+          echo "Workflow 3 completed: 3+3 = $((3+3))"
