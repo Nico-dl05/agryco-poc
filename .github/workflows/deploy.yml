@@ -1,28 +1,17 @@
-name: "Deploy - gated by workflows + approval"
+name: "Workflow 3"
 
 on:
-  workflow_run:
-    workflows: ["Workflow 1", "Workflow 2"]
-    types: [completed]
+  workflow_dispatch: {}
 
 jobs:
-  check-both:
-    name: Check both workflows on same commit (PR only)
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'pull_request' }}
-    steps:
-      - name: TOTO
-        run: |
-          echo "TOTO"
-
   deploy:
-    name: Deploy (requires approval)
-    needs: check-both
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Calculate 3+3 (deployment step)
+      - name: Start manual workflow
+        run: |
+          echo "Workflow 3 launched manually from GitHub Actions"
+
+      - name: Calculate 3+3
         run: |
           echo "Calculating 3+3"
           result=$((3+3))
@@ -31,6 +20,7 @@ jobs:
             echo "ERROR: expected 6 but got $result"
             exit 1
           fi
-      - name: Report deploy status
+
+      - name: Report status
         run: |
-          echo "Deploy job completed: 3+3 = $((3+3))"
+          echo "Workflow 3 completed: 3+3 = $((3+3))"
