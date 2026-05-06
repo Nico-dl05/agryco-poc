@@ -1,15 +1,57 @@
 name: "Workflow 3"
 
 on:
-  workflow_dispatch:
-    inputs:
-      target_job:
-        description: 'Which job to run (deploy)'
-        required: true
-        default: 'deploy'
+  push:
+    branches: [ main ]
+  pull_request:
+
 jobs:
+  calculate-1:
+    name: Workflow 1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Calculate 1+1
+        run: |
+          echo "Calculating 1+1"
+          result=$((1+1))
+          echo "Result: $result"
+          if [ "$result" -ne 2 ]; then
+            echo "ERROR: expected 2 but got $result"
+            exit 1
+          fi
+
+      - name: Report status
+        run: |
+          echo "Workflow 1 completed: 1+1 = $((1+1))"
+
+  calculate-2:
+    name: Workflow 2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Calculate 2+2
+        run: |
+          echo "Calculating 2+2"
+          result=$((2+2))
+          echo "Result: $result"
+          if [ "$result" -ne 4 ]; then
+            echo "ERROR: expected 4 but got $result"
+            exit 1
+          fi
+
+      - name: Report status
+        run: |
+          echo "Workflow 2 completed: 2+2 = $((2+2))"
+
   deploy:
     name: Deploy
+    needs: [calculate-1, calculate-2]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: production
     steps:
