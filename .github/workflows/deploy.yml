@@ -2,15 +2,12 @@ name: "Workflow 3"
 
 on:
   workflow_dispatch:
-    inputs:
-      target_job:
-        description: 'Which job to run (deploy)'
-        required: true
-        default: 'deploy'
+
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Checkout
         uses: actions/checkout@v4
